@@ -9,7 +9,7 @@ from astropy.table import Table
 # read TIC v8 within 100 pc
 dat = pd.read_csv("ticv8_100pc.csv")
 
-dpc = 100
+dpc = 50
 plxcrit=1000.0/dpc
 datlim = dat[dat["plx"]>plxcrit]
 ra = datlim["ra"].values
@@ -25,9 +25,9 @@ ydec=ydat["Decl. (deg)"]
 nside=8
 fac=np.pi/180.0
 print(np.max(dec*fac+np.pi/2.0), np.min(dec*fac+np.pi/2.0))
-pixdat = hp.ang2pix(nside, np.pi/2.0 - dec*fac,ra*fac+np.pi)
+pixdat = hp.ang2pix(nside, np.pi/2.0 - dec*fac,ra*fac)
 density = np.bincount(pixdat)/np.sum(ra)
-hp.visufunc.mollview(density, coord="E", min=np.min(density),max=np.min(density)*2)
+hp.visufunc.mollview(density, coord="E", min=np.min(density),max=np.min(density)*2, flip="geo")
 
 plt.savefig("density"+str(dpc)+"pc.png")
 plt.show()
