@@ -28,8 +28,8 @@ coords = SkyCoord(ra=ra * u.deg, dec=dec * u.deg, frame='icrs')
 ycoords = SkyCoord(ra=yra * u.deg, dec=ydec * u.deg, frame='icrs')
 
 # Plot stars on the map
-#ax.scatter(coords.ra.wrap_at(180 * u.deg).radian, coords.dec.radian, marker='o', s=0.3, c='blue', label='Stars',alpha=0.05)
-ax.scatter(coords.ra.wrap_at(180 * u.deg).radian, coords.dec.radian, marker='o', s=1, c='blue', label='Stars',alpha=0.1)
+ax.scatter(coords.ra.wrap_at(180 * u.deg).radian, coords.dec.radian, marker='o', s=0.3, c='blue', label='Stars',alpha=0.05)
+#ax.scatter(coords.ra.wrap_at(180 * u.deg).radian, coords.dec.radian, marker='o', s=1, c='blue', label='Stars',alpha=0.1)
 
 # Plot Y-dwarfs on the map
 ax.scatter(ycoords.ra.wrap_at(180 * u.deg).radian, ycoords.dec.radian, marker='o', s=20, c='purple', label='known Y-dwarfs',alpha=0.7)
