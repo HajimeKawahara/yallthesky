@@ -6,12 +6,21 @@ from astropy.coordinates import SkyCoord
 import astropy.units as u
 from astropy.table import Table
 
-# read TIC v8 within 100 pc
-dat = pd.read_csv("ticv8_100pc.csv")
-
-dpc = 50
+db="GAIA"
+if db == "TICv8":
+    # read TIC v8 within 200 pc this csv is computed in allthesky directory in whaleshark 
+    dat = pd.read_csv("ticv8_200pc.csv")
+elif db == "GAIA":
+    #read gaia 100pc
+    dat = pd.read_csv("gaia100pc.csv", delimiter=",")
+    
+dpc = 100
 plxcrit=1000.0/dpc
-datlim = dat[dat["plx"]>plxcrit]
+if db == "TICv8":
+    datlim = dat[dat["plx"]>plxcrit]
+elif db == "GAIA":
+    datlim = dat[dat["parallax"]>plxcrit]
+
 ra = datlim["ra"].values
 dec = datlim["dec"].values
 
@@ -27,7 +36,8 @@ fac=np.pi/180.0
 print(np.max(dec*fac+np.pi/2.0), np.min(dec*fac+np.pi/2.0))
 pixdat = hp.ang2pix(nside, np.pi/2.0 - dec*fac,ra*fac)
 density = np.bincount(pixdat)/np.sum(ra)
-hp.visufunc.mollview(density, coord="E", min=np.min(density),max=np.min(density)*2, flip="geo")
+mean = np.nanmean(density)
+hp.visufunc.mollview(density/mean, coord="E", min=np.min(density)/mean,max=np.min(density)*3/mean)#, flip="geo")
 
-plt.savefig("density"+str(dpc)+"pc.png")
+plt.savefig("density"+db+str(dpc)+"pc.png")
 plt.show()

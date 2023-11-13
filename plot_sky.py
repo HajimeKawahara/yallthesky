@@ -5,10 +5,10 @@ from astropy.coordinates import SkyCoord
 import astropy.units as u
 from astropy.table import Table
 
-# read TIC v8 within 100 pc
-dat = pd.read_csv("ticv8_100pc.csv")
+# read TIC v8 within 200 pc
+dat = pd.read_csv("ticv8_200pc.csv")
 
-dpc = 100
+dpc = 200
 plxcrit=1000.0/dpc
 datlim = dat[dat["plx"]>plxcrit]
 ra = datlim["ra"].values
@@ -28,7 +28,7 @@ coords = SkyCoord(ra=ra * u.deg, dec=dec * u.deg, frame='icrs')
 ycoords = SkyCoord(ra=yra * u.deg, dec=ydec * u.deg, frame='icrs')
 
 # Plot stars on the map
-ax.scatter(coords.ra.wrap_at(180 * u.deg).radian, coords.dec.radian, marker='o', s=0.3, c='blue', label='Stars',alpha=0.05)
+ax.scatter(coords.ra.wrap_at(180 * u.deg).radian, coords.dec.radian, marker='o', s=0.2, c='blue', label='Stars',alpha=0.02)
 #ax.scatter(coords.ra.wrap_at(180 * u.deg).radian, coords.dec.radian, marker='o', s=1, c='blue', label='Stars',alpha=0.1)
 
 # Plot Y-dwarfs on the map
