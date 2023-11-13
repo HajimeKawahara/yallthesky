@@ -12,8 +12,12 @@ from astropy.table import Table
 db="TICv8"
 
 if db == "TICv8":
-    # read TIC v8 within 200 pc this csv is computed in allthesky directory in whaleshark 
-    dat = pd.read_csv("ticv8_200pc.csv")
+    # read TIC v8 within 200 pc this csv is computed in allthesky directory in whaleshark
+    try:
+        dat = pd.read_csv("ticv8_200pc.csv")
+    except:
+        print("download from https://secondearths.sakura.ne.jp/ticv8_200pc.csv")
+        exit()
     plx = dat["plx"]
 elif db == "GAIA":
     #read gaia 100pc
@@ -32,14 +36,14 @@ plt.ylabel("# of stars")
 plt.legend()
 plt.savefig("ddepend.png")
 plt.show()   
-#count within 10 pc
-dpc10 = 10
+#count within 10/20 pc
+dpc10 = 20
 plxcrit10=1000.0/dpc10
 datlim10 = dat[plx>plxcrit10]
 n10 = len(datlim10)
 print(n10)
     
-dpc = 100
+dpc = 200
 plxcrit=1000.0/dpc
 datlim = dat[plx>plxcrit]
 n = len(datlim)
